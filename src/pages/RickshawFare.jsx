@@ -134,10 +134,10 @@ function RickshawFare() {
       <table class='table'>
         <thead class='table-dark'>
           <tr>
-            <th>গন্তব্য</th>
-            <th>মেইন গেট হতে</th>
-            <th>বিনোদপুর গেট হতে</th>
-            <th>কাজলা গেট হতে</th>
+            <th>Destination</th>
+            <th>From Main Gate</th>
+            <th>From Binodpur Gate</th>
+            <th>From Kazla Gate</th>
             <th>Action</th>
           </tr>
         </thead>

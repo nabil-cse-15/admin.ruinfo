@@ -3,7 +3,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../utils/firebase'
 import '../App.css'
 import '../css/login.css'
-import { Navigate } from 'react-router-dom';
 
 function Login() {
 
@@ -15,12 +14,11 @@ function Login() {
     })
   }
 
-
   const handlelogin = async () => {
     try {
       const userLogin = await signInWithEmailAndPassword(auth,inputfields.email,inputfields.password);
       localStorage.setItem("user", JSON.stringify(userLogin.user));
-     window.location.href = "/dashboard";
+      window.location.href = "/dashboard";
     } catch (err) {
       alert(err.message);
     }

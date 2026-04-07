@@ -31,10 +31,10 @@ function Dashboard() {
         <Link to="/dashboard/rickshawfare" className="card"><MdElectricRickshaw className="icon" />Rickshaw Fare</Link>
         <Link to="/dashboard/notice" className="card"><LuClipboardList className="icon" />Notice</Link>
         <Link to="/dashboard/busshedule" className="card"> <FaBus className="icon" /> Bus Schedule</Link>
-        <Link to="/dashboard/lostandfound" className="card"><FaSearch className="icon" />Lost & Found</Link>
+        {/* <Link to="/dashboard/lostandfound" className="card"><FaSearch className="icon" />Lost & Found</Link> */}
         <Link to="/dashboard/emergency" className="card"><BiSolidContact className="icon" />Emergency Contact</Link>
       </div>
-
+<br/>
       <button class="btn btn-danger" onClick={handleLogout}>Logout</button>
 
     </div>

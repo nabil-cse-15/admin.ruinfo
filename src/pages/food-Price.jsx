@@ -20,7 +20,7 @@ function FoodPrice() {
 
 
   const addDocument = async (e) => {
-    e.preventDefault();
+     e.preventDefault();
 
     if (!inputfields.name || !inputfields.quantity || !inputfields.price) {
       alert("Please Enter All Fields");
@@ -100,9 +100,9 @@ function FoodPrice() {
 
         <thead class='table-dark'>
           <tr>
-            <th>খাবারের নাম</th>
-            <th>খাবারের পরিমাণ</th>
-            <th>সর্বোচ্চ মূল্য</th>
+            <th>Food Name</th>
+            <th>Quatity</th>
+            <th>Price</th>
             <th>Action</th>
           </tr>
         </thead>

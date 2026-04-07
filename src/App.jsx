@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
-//import Food from "./pages/food";
 import FoodPrice from "./pages/food-Price"
 import RickshawFare from "./pages/RickshawFare"
 import Notice from "./pages/Notices"
@@ -25,14 +24,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/dashboard/food"
-          element={
-            <ProtectedRoute>
-              < Food />
-            </ProtectedRoute>
-          }
-        /> */}
         <Route
           path="/dashboard/foodprice"
           element={
@@ -77,14 +68,14 @@ function App() {
           }
         />
 
-         <Route
+         {/* <Route
           path="/dashboard/lostandfound"
           element={
             <ProtectedRoute>
               < LostAndFound/>
             </ProtectedRoute>
           }
-        />
+        /> */}
          <Route
           path="/dashboard/emergency"
           element={
