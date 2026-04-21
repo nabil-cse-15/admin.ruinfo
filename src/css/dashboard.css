@@ -1,5 +1,5 @@
 .card{
-  background:white;
+  background:rgb(249, 249, 248);
   padding:30px;
   border-radius:10px;
   color:black;
@@ -14,9 +14,7 @@
   color:#007bff;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-}
+
 
 .card-container{
   display:grid;
