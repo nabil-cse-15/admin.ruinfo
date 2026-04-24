@@ -1,10 +1,4 @@
-.login{
-  background:rgb(60, 57, 141);
-  padding:30px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(34, 3, 119, 0.2);
-  width:320px;
-}
+
 
 
 label{
@@ -27,8 +21,47 @@ label{
 
 input{
   background-color: #f7eeee;
-}
 
+}
+.form-control{
+  width: 300px;
+  border-color: rgb(180, 168, 168);
+}
 .login-button{
   width: 100%;
 }
+
+
+ body {
+      background-color: #ffffff;
+    }
+
+    .login-card {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 25px 25px rgba(75, 73, 73, 0.1);
+      text-align: center;
+      
+  border-radius: 20px;
+    }
+
+    .logo-img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .btn-custom {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .btn-custom:hover {
+      background-color: #2563eb;
+    }
+
+

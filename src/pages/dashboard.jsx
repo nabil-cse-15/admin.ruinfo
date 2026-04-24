@@ -10,6 +10,7 @@ import { MdElectricRickshaw } from "react-icons/md";
 import { GrGroup } from "react-icons/gr";
 import { MdEvent } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
+import { IoRestaurant } from "react-icons/io5";
 import "../App.css";
 import "../css/dashboard.css";
 function Dashboard() {
@@ -30,6 +31,7 @@ function Dashboard() {
       <div className="card-container">
         <Link to="/dashboard/buildings" className="card"><TbBuildingPavilion className="icon"/>Academic Buildings</Link>
         <Link to="/dashboard/foodprice" className="card"><IoFastFoodOutline className="icon" />Food</Link>
+         <Link to="/dashboard/foodvendor" className="card"><IoRestaurant className="icon" />FoodStall</Link>
         <Link to="/dashboard/clubs" className="card"><GrGroup className="icon" />Clubs</Link>
         <Link to="/dashboard/events" className="card"><MdEvent className="icon" />Events</Link>
         <Link to="/dashboard/rickshawfare" className="card"><MdElectricRickshaw className="icon" />Rickshaw Fare</Link>

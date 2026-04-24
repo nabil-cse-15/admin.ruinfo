@@ -11,6 +11,7 @@ import Events from "./pages/events"
 import EmergencyContact from "./pages/emergency";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BusSchedule from "./pages/busshedule";
+import FoodVendors from "./pages/FoodVendors";
 
 function App() {
   return (
@@ -39,6 +40,14 @@ function App() {
           element={
             <ProtectedRoute>
               < FoodPrice />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/dashboard/foodvendor"
+          element={
+            <ProtectedRoute>
+              < FoodVendors />
             </ProtectedRoute>
           }
         />
