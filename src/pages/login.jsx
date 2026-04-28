@@ -39,7 +39,7 @@ function Login() {
       </form>
       <button onClick={handlelogin} className='login-button'>Login</button> */}
         <div class="login-card">
-          <img src={logo} alt="Logo" class="logo-img" />
+          <img src={logo} alt="Logo" class="logo-img " />
           <h4 class="mb-4">Admin Login</h4>
 
           <form>
