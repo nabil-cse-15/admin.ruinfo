@@ -1,10 +1,22 @@
 import { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "firebase/firestore";
 import { db } from "../utils/firebase";
-import "../css/emergency.css"
-function EmergencyContact() {
+import "../css/emergency.css";
 
-  const [inputfields, setInputfields] = useState({ name: "", contact: "" });
+function EmergencyContact() {
+  const [inputfields, setInputfields] = useState({
+    title: "",
+    phone: "",
+    category: ""
+  });
+
   const [contacts, setContacts] = useState([]);
   const [editId, setEditId] = useState(null);
 
@@ -20,7 +32,11 @@ function EmergencyContact() {
   const addDocument = async (e) => {
     e.preventDefault();
 
-    if (!inputfields.name || !inputfields.contact) {
+    if (
+      !inputfields.title ||
+      !inputfields.phone ||
+      !inputfields.category
+    ) {
       alert("Please Enter All Fields");
       return;
     }
@@ -36,9 +52,13 @@ function EmergencyContact() {
         alert("Added Successfully");
       }
 
-      setInputfields({ name: "", contact: "" });
-      getContactList();
+      setInputfields({
+        title: "",
+        phone: "",
+        category: ""
+      });
 
+      getContactList();
     } catch (err) {
       alert(err.message);
     }
@@ -67,8 +87,9 @@ function EmergencyContact() {
 
   const editContact = (contact) => {
     setInputfields({
-      name: contact.name,
-      contact: contact.contact
+      title: contact.title,
+      phone: contact.phone,
+      category: contact.category
     });
 
     setEditId(contact.id);
@@ -78,26 +99,32 @@ function EmergencyContact() {
     <>
       <h2>Emergency Contact</h2>
       <br />
-      <form onSubmit={addDocument}>
 
+      <form onSubmit={addDocument}>
         <input
-          placeholder="Name"
-          value={inputfields.name}
-          onChange={(e) => handleOnChange(e, "name")}
+          placeholder="Title"
+          value={inputfields.title}
+          onChange={(e) => handleOnChange(e, "title")}
           className="input4"
         />
 
         <input
-          placeholder="Contact"
-          value={inputfields.contact}
-          onChange={(e) => handleOnChange(e, "contact")}
+          placeholder="Phone"
+          value={inputfields.phone}
+          onChange={(e) => handleOnChange(e, "phone")}
+          className="input4"
+        />
+
+        <input
+          placeholder="Category"
+          value={inputfields.category}
+          onChange={(e) => handleOnChange(e, "category")}
           className="input4"
         />
 
         <button type="submit" className="btn btn-primary">
           {editId ? "Update" : "Add"}
         </button>
-
       </form>
 
       <hr />
@@ -105,8 +132,9 @@ function EmergencyContact() {
       <table className="table">
         <thead className="table-dark">
           <tr>
-            <th>Name</th>
-            <th>Contact</th>
+            <th>Title</th>
+            <th>Phone</th>
+            <th>Category</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -114,13 +142,22 @@ function EmergencyContact() {
         <tbody>
           {contacts.map((contact) => (
             <tr key={contact.id}>
-              <td>{contact.name}</td>
-              <td>{contact.contact}</td>
+              <td>{contact.title}</td>
+              <td>{contact.phone}</td>
+              <td>{contact.category}</td>
               <td>
-                <button onClick={() => editContact(contact)} className="btn btn-primary">Edit</button>
+                <button
+                  onClick={() => editContact(contact)}
+                  className="btn btn-primary"
+                >
+                  Edit
+                </button>
+
                 <button
                   onClick={() => {
-                    if (window.confirm("Are you sure to delete?")) deleteContact(contact.id);
+                    if (window.confirm("Are you sure to delete?")) {
+                      deleteContact(contact.id);
+                    }
                   }}
                   className="btn btn-danger"
                 >
@@ -130,7 +167,6 @@ function EmergencyContact() {
             </tr>
           ))}
         </tbody>
-
       </table>
     </>
   );
