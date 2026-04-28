@@ -131,11 +131,12 @@ function AcademicBuilding() {
           className="input3"
         />
 
-        <input
+        <textarea
           placeholder="Departments (CSE,EEE)"
           value={inputfields.department}
           onChange={(e) => handleOnChange(e, "department")}
-          className="input3"
+          // className="input3"
+          className="form-control container"
         />
 
         <input
@@ -176,7 +177,7 @@ function AcademicBuilding() {
           {buildings.map((building) => (
             <tr key={building.id}>
               <td>{building.name}</td>
-              <td>{building.imageUrl}</td>
+              <td  className="text-break" style={{maxWidth:"2000px"}}>{building.imageUrl}</td>
               <td>{building.department?.join(", ")}</td>
               <td>
                 {building.location?.latitude},
@@ -189,7 +190,6 @@ function AcademicBuilding() {
                 >
                   Edit
                 </button>
-
                 <button
                   onClick={() => {
                     if (window.confirm("Delete?"))
@@ -206,6 +206,7 @@ function AcademicBuilding() {
       </table>
     </>
   );
+
 }
 
 export default AcademicBuilding;
