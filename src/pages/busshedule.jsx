@@ -78,7 +78,7 @@ function BusSchedule() {
           placeholder="Enter times (e.g. 8:00 AM, 9:30 AM)"
           value={times}
           onChange={(e) => setTimes(e.target.value)}
-          className="form-control"
+          className="form-control container"
         />
 
         <br />
