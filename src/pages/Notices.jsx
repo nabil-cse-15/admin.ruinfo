@@ -1,48 +1,66 @@
 
 import { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  Timestamp
+} from "firebase/firestore";
 import { db } from "../utils/firebase";
-import "../css/notices.css";
 
 function Notices() {
-  const [inputfields, setInputfields] = useState({ type: "", headline: "", date: "", details: "" });
+  const [inputfields, setInputfields] = useState({
+    title: "",
+    description: "",
+    publishedAt: "",
+  });
 
   const [notices, setNotices] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  const noticeCollection = collection(db, "Notices");
+  const noticesCollection = collection(db, "notices");
 
   const handleOnChange = (e, key) => {
     setInputfields({
       ...inputfields,
-      [key]: e.target.value,
+      [key]: e.target.value
     });
   };
 
   const addDocument = async (e) => {
     e.preventDefault();
 
-    if (!inputfields.type || !inputfields.headline || !inputfields.date || !inputfields.details) {
-      alert("Please Enter All Fields");
+    if (!inputfields.title || !inputfields.description) {
+      alert("Please fill required fields");
       return;
     }
 
+    const noticeData = {
+      title: inputfields.title,
+      description: inputfields.description,
+      publishedAt: inputfields.publishedAt
+        ? Timestamp.fromDate(new Date(inputfields.publishedAt))
+        : Timestamp.now()
+    };
+
     try {
       if (editId) {
-        const noticeDoc = doc(db, "Notices", editId);
-        await updateDoc(noticeDoc, inputfields);
+        const noticeDoc = doc(db, "notices", editId);
+        await updateDoc(noticeDoc, noticeData);
         alert("Updated Successfully");
         setEditId(null);
       } else {
-        await addDoc(noticeCollection, inputfields);
+        await addDoc(noticesCollection, noticeData);
         alert("Added Successfully");
       }
 
       setInputfields({
-        type: "",
-        headline: "",
-        date: "",
-        details: "",
+        title: "",
+        description: "",
+        publishedAt: "",
       });
 
       getNoticeList();
@@ -52,14 +70,14 @@ function Notices() {
   };
 
   const getNoticeList = async () => {
-    const data = await getDocs(noticeCollection);
+    const data = await getDocs(noticesCollection);
 
-    const list = data.docs.map((doc) => ({
+    const noticeList = data.docs.map((doc) => ({
       ...doc.data(),
-      id: doc.id,
+      id: doc.id
     }));
 
-    setNotices(list);
+    setNotices(noticeList);
   };
 
   useEffect(() => {
@@ -67,17 +85,20 @@ function Notices() {
   }, []);
 
   const deleteNotice = async (id) => {
-    const noticeDoc = doc(db, "Notices", id);
+    const noticeDoc = doc(db, "notices", id);
     await deleteDoc(noticeDoc);
     getNoticeList();
   };
 
   const editNotice = (notice) => {
     setInputfields({
-      type: notice.type,
-      headline: notice.headline,
-      date: notice.date,
-      details: notice.details,
+      title: notice.title || "",
+      description: notice.description || "",
+      publishedAt: notice.publishedAt
+        ? new Date(notice.publishedAt.seconds * 1000)
+            .toISOString()
+            .slice(0, 16)
+        : ""
     });
 
     setEditId(notice.id);
@@ -85,57 +106,46 @@ function Notices() {
 
   return (
     <>
-      <h2>Notice</h2>
+      <h2>Notices</h2>
 
-      <form onSubmit={addDocument} className="notice-form">
+      <form onSubmit={addDocument}>
         <input
-          type="text"
-          placeholder="Notice Type"
-          value={inputfields.type}
-          onChange={(e) => handleOnChange(e, "type")}
-          className="input5"
+          placeholder="Title"
+          value={inputfields.title}
+          onChange={(e) => handleOnChange(e, "title")}
+          className="input3"
         />
-         
-          <input
-          type="text"
-          placeholder="Headline"
-          value={inputfields.headline}
-          onChange={(e) => handleOnChange(e, "headline")}
-          className="input5"
-        />
-     
-       
 
-        <input
-          type="text"
-          placeholder="Enter date"
-          value={inputfields.date}
-          onChange={(e) => handleOnChange(e, "date")}
-          className="input5"
+        <textarea
+          placeholder="Description"
+          value={inputfields.description}
+          onChange={(e) => handleOnChange(e, "description")}
+          className="form-control container"
         />
 
         <input
-         type="text"
-          placeholder="Notice Details"
-          value={inputfields.details}
-          onChange={(e) => handleOnChange(e, "details")}
-          className="input5"
-        ></input>
+          type="datetime-local"
+          value={inputfields.publishedAt}
+          onChange={(e) => handleOnChange(e, "publishedAt")}
+          className="input3"
+        />
 
-        <button type="submit" className="btn btn-primary mt-2">
+        <br />
+        <br />
+
+        <button type="submit" className="btn btn-primary">
           {editId ? "Update" : "Add"}
         </button>
       </form>
 
       <hr />
 
-      <table className="table table-bordered table-striped mt-4">
+      <table className="table">
         <thead className="table-dark">
           <tr>
-            <th>Type</th>
-            <th>Headline</th>
-            <th>Date</th>
-            <th>Details</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Published At</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -143,22 +153,29 @@ function Notices() {
         <tbody>
           {notices.map((notice) => (
             <tr key={notice.id}>
-              <td>{notice.type}</td>
-              <td><b>{notice.headline}</b></td>
-              <td>{notice.date}</td>
-              <td>{notice.details}</td>
+              <td>{notice.title}</td>
+              <td>{notice.description}</td>
+
+              <td>
+                {notice.publishedAt
+                  ? new Date(
+                      notice.publishedAt.seconds * 1000
+                    ).toLocaleString()
+                  : "N/A"}
+              </td>
+
 
               <td>
                 <button
                   onClick={() => editNotice(notice)}
-                  className="btn btn-primary me-2"
+                  className="btn btn-primary"
                 >
                   Edit
                 </button>
-                
+
                 <button
                   onClick={() => {
-                    if (window.confirm("Are you sure to delete?")) {
+                    if (window.confirm("Delete?")) {
                       deleteNotice(notice.id);
                     }
                   }}
@@ -176,4 +193,3 @@ function Notices() {
 }
 
 export default Notices;
-

@@ -16,7 +16,10 @@ function AcademicBuilding() {
     imageUrl: "",
     department: "",
     latitude: "",
-    longitude: ""
+    longitude: "",
+    floors: "",
+    faculty: "",
+    established_year: ""
   });
 
   const [buildings, setBuildings] = useState([]);
@@ -42,24 +45,34 @@ function AcademicBuilding() {
     const buildingData = {
       name: inputfields.name,
       imageUrl: inputfields.imageUrl,
+
       department: inputfields.department
         .split(",")
         .map((item) => item.trim())
         .filter((item) => item !== ""),
+
       location: new GeoPoint(
         Number(inputfields.latitude),
         Number(inputfields.longitude)
-      )
+      ),
+
+      floors: Number(inputfields.floors),
+      faculty: inputfields.faculty,
+      established_year: Number(inputfields.established_year)
     };
 
     try {
       if (editId) {
         const buildingDoc = doc(db, "buildings", editId);
+
         await updateDoc(buildingDoc, buildingData);
+
         alert("Updated Successfully");
+
         setEditId(null);
       } else {
         await addDoc(buildingsCollection, buildingData);
+
         alert("Added Successfully");
       }
 
@@ -68,7 +81,10 @@ function AcademicBuilding() {
         imageUrl: "",
         department: "",
         latitude: "",
-        longitude: ""
+        longitude: "",
+        floors: "",
+        faculty: "",
+        established_year: ""
       });
 
       getBuildingList();
@@ -94,7 +110,9 @@ function AcademicBuilding() {
 
   const deleteBuilding = async (id) => {
     const buildingDoc = doc(db, "buildings", id);
+
     await deleteDoc(buildingDoc);
+
     getBuildingList();
   };
 
@@ -102,11 +120,17 @@ function AcademicBuilding() {
     setInputfields({
       name: building.name || "",
       imageUrl: building.imageUrl || "",
+
       department: Array.isArray(building.department)
         ? building.department.join(", ")
         : "",
+
       latitude: building.location?.latitude || "",
-      longitude: building.location?.longitude || ""
+      longitude: building.location?.longitude || "",
+
+      floors: building.floors || "",
+      faculty: building.faculty || "",
+      established_year: building.established_year || ""
     });
 
     setEditId(building.id);
@@ -135,7 +159,6 @@ function AcademicBuilding() {
           placeholder="Departments (CSE,EEE)"
           value={inputfields.department}
           onChange={(e) => handleOnChange(e, "department")}
-          // className="input3"
           className="form-control container"
         />
 
@@ -153,7 +176,29 @@ function AcademicBuilding() {
           className="input3"
         />
 
-        <br /><br />
+        <input
+          placeholder="Floors"
+          value={inputfields.floors}
+          onChange={(e) => handleOnChange(e, "floors")}
+          className="input3"
+        />
+
+        <input
+          placeholder="Faculty"
+          value={inputfields.faculty}
+          onChange={(e) => handleOnChange(e, "faculty")}
+          className="input3"
+        />
+
+        <input
+          placeholder="Established Year"
+          value={inputfields.established_year}
+          onChange={(e) => handleOnChange(e, "established_year")}
+          className="input3"
+        />
+
+        <br />
+        <br />
 
         <button type="submit" className="btn btn-primary">
           {editId ? "Update" : "Add"}
@@ -169,6 +214,9 @@ function AcademicBuilding() {
             <th>Image URL</th>
             <th>Departments</th>
             <th>Location</th>
+            <th>Floors</th>
+            <th>Faculty</th>
+            <th>Established</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -177,12 +225,27 @@ function AcademicBuilding() {
           {buildings.map((building) => (
             <tr key={building.id}>
               <td>{building.name}</td>
-              <td  className="text-break" style={{maxWidth:"2000px"}}>{building.imageUrl}</td>
+
+              <td
+                className="text-break"
+                style={{ maxWidth: "200px" }}
+              >
+                {building.imageUrl}
+              </td>
+
               <td>{building.department?.join(", ")}</td>
+
               <td>
                 {building.location?.latitude},
                 {building.location?.longitude}
               </td>
+
+              <td>{building.floors}</td>
+
+              <td>{building.faculty}</td>
+
+              <td>{building.established_year}</td>
+
               <td>
                 <button
                   onClick={() => editBuilding(building)}
@@ -190,10 +253,12 @@ function AcademicBuilding() {
                 >
                   Edit
                 </button>
+
                 <button
                   onClick={() => {
-                    if (window.confirm("Delete?"))
+                    if (window.confirm("Delete?")) {
                       deleteBuilding(building.id);
+                    }
                   }}
                   className="btn btn-danger"
                 >
@@ -206,7 +271,6 @@ function AcademicBuilding() {
       </table>
     </>
   );
-
 }
 
 export default AcademicBuilding;

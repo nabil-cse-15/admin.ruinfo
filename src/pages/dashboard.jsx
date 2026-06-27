@@ -29,18 +29,18 @@ function Dashboard() {
     <div className="dashboard-container">
       <h1 className="title">Dashboard</h1>
       <div className="card-container">
-        <Link to="/dashboard/buildings" className="card"><TbBuildingPavilion className="icon"/>Academic Buildings</Link>
+        <Link to="/dashboard/buildings" className="card"><TbBuildingPavilion className="icon" />Academic Buildings</Link>
         <Link to="/dashboard/foodprice" className="card"><IoFastFoodOutline className="icon" />Food</Link>
-         <Link to="/dashboard/foodvendor" className="card"><IoRestaurant className="icon" />FoodStall</Link>
+        <Link to="/dashboard/foodvendor" className="card"><IoRestaurant className="icon" />FoodStall</Link>
         <Link to="/dashboard/clubs" className="card"><GrGroup className="icon" />Clubs</Link>
         <Link to="/dashboard/events" className="card"><MdEvent className="icon" />Events</Link>
         <Link to="/dashboard/rickshawfare" className="card"><MdElectricRickshaw className="icon" />Rickshaw Fare</Link>
         <Link to="/dashboard/notice" className="card"><LuClipboardList className="icon" />Notice</Link>
-        <Link to="/dashboard/busroute" className="card"> <FaBus  className="icon" /> Bus Route</Link>
-         <Link to="/dashboard/busshedule" className="card"> <IoMdTime className="icon" /> BusShedule</Link>
+        <Link to="/dashboard/busroute" className="card"> <FaBus className="icon" /> Bus Route</Link>
+        <Link to="/dashboard/busshedule" className="card"> <IoMdTime className="icon" /> BusShedule</Link>
         <Link to="/dashboard/emergency" className="card"><BiSolidContact className="icon" />Emergency Contact</Link>
       </div>
-<br/>
+      <br />
       <button class="btn btn-danger" onClick={handleLogout}>Logout</button>
 
     </div>
